@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="pythonnet_py27_win" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="VoiceControlCore">
+      <HintPath>..\..\..\..\Visual Studio Projects\VoiceControl\VoiceControlCore\bin\Release\netstandard2.0\VoiceControlCore.dll</HintPath>
+    </Reference>
+    <Reference Include="VoiceControlSDK">
+      <HintPath>..\..\..\..\Visual Studio Projects\VoiceControl\VoiceControlSDK\bin\Debug\netstandard2.0\VoiceControlSDK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
