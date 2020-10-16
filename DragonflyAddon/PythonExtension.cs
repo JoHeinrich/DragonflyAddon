@@ -12,7 +12,7 @@ namespace VoiceControl
     public class PythonProvider : IProvider<ICommandController>
     {
         Dictionary<string, Func<ICommandController>> mapping = new Dictionary<string, Func<ICommandController>>();
-        public PythonProvider(IPathManager pathManager)
+        public PythonProvider(IPaths pathManager)
         {
             var path=pathManager.GetPath("Python");
             foreach (var file in Directory.EnumerateFiles(path))
@@ -44,7 +44,7 @@ namespace VoiceControl
         //}
     }
 
-    public class PythonController : INamedCommandController
+    public class PythonController : ICommandController
     {
         static string q = "\"";
         string Pattern = $@"{q}([\w\s\]\[\|\(\)<>]+){q}:";
@@ -53,15 +53,13 @@ namespace VoiceControl
         {
 
             commands=RegularExpressionHelper.RegularExpressionDictionary(data, Pattern, 1, 1);
-            Name =string .Join(" ", name.Split('_').Where(x => x != "map" && x!= "action"));
         }
-        public string Name { get; }
 
-        public void Build(IBuilder builder)
+        public void Build(ICommandBuilder builder)
         {
             foreach (var item in commands)
             {
-                builder.Commands.AddCommand(item.Key, () => Console.WriteLine("Not implemented yet."));
+                builder.AddCommand(item.Key, () => Console.WriteLine("Not implemented yet."));
             }
         }
     }
