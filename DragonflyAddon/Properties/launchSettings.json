@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "DragonflyAddon": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\laise\\Documents\\Visual Studio Projects\\VoiceControl\\EasyVoiceCode\\bin\\Debug\\EasyVoiceCode.exe",
+      "commandLineArgs": "-d EasyVoiceCodeTest2"
+    }
+  }
+}
