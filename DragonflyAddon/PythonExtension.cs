@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using VoiceControl;
 
-namespace VoiceControl
+namespace DragonflyAddon
 {
     
     public class PythonProvider : IProvider<ICommandController>

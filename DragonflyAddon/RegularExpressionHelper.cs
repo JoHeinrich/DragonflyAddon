@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace VoiceControl
+namespace DragonflyAddon
 {
     public class RegularExpressionHelper
     {

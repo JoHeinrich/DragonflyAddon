@@ -18,7 +18,6 @@
     <PackageReference Include="Python.Included" Version="3.7.3.13" />
     <PackageReference Include="Python.Runtime.NETStandard" Version="3.7.1" />
     <PackageReference Include="pythonnet_netstandard_py37_win" Version="2.5.1" />
-    <PackageReference Include="VoiceControlSDK" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

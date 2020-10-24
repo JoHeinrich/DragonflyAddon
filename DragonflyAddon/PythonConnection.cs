@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 
-namespace DragonflyTest
+namespace DragonflyAddon
 {
     public class PythonConnection
     {
