@@ -32,19 +32,5 @@ namespace DragonflyAddon
             }
         }
 
-        //public void TestIronpython(string command)
-        //{
-        //    ScriptEngine engine = Python.CreateEngine();
-        //    var paths = engine.GetSearchPaths();
-        //    paths.Add(@"C:\Python27\Lib\site-packages\");
-        //    paths.Add(@"C:\Python27\Lib\");
-        //    engine.SetSearchPaths(paths);
-        //    engine.ImportModule("dragonfly");
-        //    engine.ImportModule("Key");
-        //    engine.Execute("from dragonfly import Key");
-        //    engine.Execute("ipy -X:Frames -m pip install html5lib");
-        //    //engine.ExecuteFile(@"test.py");
-        //    engine.Execute(command);
-        //}
     }
 }

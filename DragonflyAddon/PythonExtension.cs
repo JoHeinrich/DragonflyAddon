@@ -17,13 +17,8 @@ namespace DragonflyAddon
             var path=pathManager.GetPath("Python");
             foreach (var file in Directory.EnumerateFiles(path))
             {
-                var content=File.ReadAllText(file);
-                var data = RegularExpressionHelper.RegularExpressionDictionary(content, @"([\w_]+)\s=\s\{([^\{\}]*)\}", 1, 2);
-                foreach (var item in data)
-                {
-                    mapping.Add("Python."+item.Key,()=>new PythonController(item.Key, item.Value));
-
-                }
+                var name = Path.GetFileNameWithoutExtension(file);
+                mapping.Add(name, () => new DragonflyController(file));
             }
         }
         public IEnumerable<string> Available => mapping.Keys.ToList();
@@ -38,28 +33,21 @@ namespace DragonflyAddon
             return mapping[identifier]();
         }
 
-        //IEnumerator IEnumerable.GetEnumerator()
-        //{
-        //    return mapping.GetEnumerator();
-        //}
     }
 
-    public class PythonController : ICommandController
+    internal class DragonflyController : ICommandController
     {
-        static string q = "\"";
-        string Pattern = $@"{q}([\w\s\]\[\|\(\)<>]+){q}:";
-        Dictionary<string, string> commands;
-        public PythonController(string name,string data)
+        DragonflyAnalyzer analyzer;
+        public DragonflyController(string path)
         {
-
-            commands=RegularExpressionHelper.RegularExpressionDictionary(data, Pattern, 1, 1);
+            analyzer = new DragonflyAnalyzer(path);
         }
 
         public void Build(ICommandBuilder builder)
         {
-            foreach (var item in commands)
+            foreach (var command in analyzer.Commands)
             {
-                builder.AddCommand(item.Key, () => Console.WriteLine("Not implemented yet."));
+                builder.AddCommand(command, () => analyzer.Execute(command));
             }
         }
     }

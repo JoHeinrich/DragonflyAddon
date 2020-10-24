@@ -5,16 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="bridge.py" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="bridge.py">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Python.Included" Version="3.7.3.13" />
     <PackageReference Include="Python.Runtime.NETStandard" Version="3.7.1" />
     <PackageReference Include="pythonnet_netstandard_py37_win" Version="2.5.1" />

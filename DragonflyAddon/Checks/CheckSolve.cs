@@ -1,7 +1,7 @@
 ﻿using System;
 using VoiceControl;
 
-namespace UnitTestProject1
+namespace DragonflyAddon
 {
     public abstract class CheckSolve : ICheckSolve
     {

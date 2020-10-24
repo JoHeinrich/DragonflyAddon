@@ -1,7 +1,7 @@
 ﻿using Python.Runtime;
 using System;
 
-namespace UnitTestProject1
+namespace DragonflyAddon
 {
     public class CheckPythonInPath : CheckSolve
     {

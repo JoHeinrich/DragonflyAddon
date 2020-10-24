@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace UnitTestProject1
+namespace DragonflyAddon
 {
     public class PathFinder
     {
@@ -32,7 +32,7 @@ namespace UnitTestProject1
             var files = Directory.EnumerateFiles(path, "*", SearchOption.AllDirectories).ToList();
             var localfiles = Directory.EnumerateFiles(localpath, "*", SearchOption.AllDirectories).ToList();
             files.AddRange(localfiles);
-            var pythonFiles = files.Where(x => x.Contains("Python")).ToHashSet();
+            var pythonFiles = new HashSet<string>(files.Where(x => x.Contains("Python")));
             HashSet<string> installations = new HashSet<string>();
             foreach (var potential in pythonFiles)
             {
