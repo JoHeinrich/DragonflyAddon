@@ -27,6 +27,13 @@ namespace DragonflyAddon
             var name = Path.GetFileNameWithoutExtension(path);
             using (PyScope scope = Py.CreateScope())
             {
+                scope.Import("sys");
+                scope.Import("os");
+                var dir = @"C:/Users/laise/Documents/EasyVoiceCodeTest2/Dragonfly";
+                var com = $"sys.path.append({dir})";
+                scope.Exec("p = os.getcwd()");
+                var p = scope.Get("p");
+                //scope.Exec(com);
                 scope.Exec(data);
                 var v = scope.Get(name);
                 var mapping = v.GetAttr("mapping");

@@ -6,15 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Python.Included" Version="3.7.3.13" />
-    <PackageReference Include="Python.Runtime.NETStandard" Version="3.7.1" />
-    <PackageReference Include="pythonnet_netstandard_py37_win" Version="2.5.1" />
+    <PackageReference Include="pythonnet_netstandard_py38_win_x86" Version="2.5.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="VoiceControlCore">
-      <HintPath>..\..\..\..\Visual Studio Projects\VoiceControl\VoiceControlCore\bin\Release\netstandard2.0\VoiceControlCore.dll</HintPath>
-    </Reference>
     <Reference Include="VoiceControlSDK">
       <HintPath>..\..\..\..\Visual Studio Projects\VoiceControl\VoiceControlSDK\bin\Debug\netstandard2.0\VoiceControlSDK.dll</HintPath>
     </Reference>

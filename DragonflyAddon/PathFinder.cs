@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -7,24 +8,52 @@ namespace DragonflyAddon
 {
     public class PathFinder
     {
-        //get python path from environtment variable
-        public static string GetPythonPathfromPath()
+        public static IEnumerable<PythonInstallation> GetPythonInstallationsfromPath()
         {
-            var environmentVariables = Environment.GetEnvironmentVariables();
-            string pathVariable = environmentVariables["Path"] as string;
-            if (pathVariable != null)
+            var machinePathVariable = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine);
+            var userPathVariable = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User);
+            var pathVariable = machinePathVariable + ";" + userPathVariable;
+
+            List<string> paths = new List<string>();
+            string[] allPaths = pathVariable.Split(';');
+            foreach (var path in allPaths)
             {
-                string[] allPaths = pathVariable.Split(';');
-                foreach (var path in allPaths)
+                string pythonPathFromEnv = Path.Combine(path, "python.exe");
+                if (File.Exists(pythonPathFromEnv))
                 {
-                    string pythonPathFromEnv = path + "\\python.exe";
-                    if (File.Exists(pythonPathFromEnv))
-                        return path;
+                    paths.Add(pythonPathFromEnv);
                 }
             }
+            return paths.Select(x=>new PythonInstallation(x));
+        }
+        //get python path from environtment variable
+        public static PythonInstallation GetPythonPathfromPath()
+        {
+            var paths = GetPythonInstallationsfromPath();
+            
+            foreach (var path in paths)
+            {
+                if (File.Exists(path.Executable))
+                {
+                    var p = Process.Start(new ProcessStartInfo(path.Executable, "--version") { UseShellExecute = false, RedirectStandardOutput = true });
+                    p.WaitForExit();
+                    if (p.ExitCode != 0) continue;
+                    var result = p.StandardOutput.ReadToEnd();
+                    return path;
+
+                }
+                        
+            }
+            
             return null;
         }
-        public static IEnumerable<string> GetPythonInstallations()
+        public static IEnumerable<PythonInstallation> GetPythonInstallations()
+        {
+            var path = new HashSet<PythonInstallation>( GetPythonInstallationsfromPath());
+            GetPythonInstallationsFromStartMenu().ToList().ForEach(x => path.Add(x));
+            return path;
+        }
+        public static IEnumerable<PythonInstallation> GetPythonInstallationsFromStartMenu()
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu) + "\\Programs";
             string localpath = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu) + "\\Programs";
@@ -40,13 +69,13 @@ namespace DragonflyAddon
                 var pythonExe = Path.Combine(directory, "python.exe");
                 if (File.Exists(pythonExe))
                 {
-                    installations.Add(directory);
+                    installations.Add(pythonExe);
                 }
 
             }
-            return installations;
+            return installations.Select(x => new PythonInstallation(x));
         }
-        public static string GetPythonInstallationPath()
+        public static PythonInstallation GetPythonInstallationPath()
         {
             return GetPythonInstallations().FirstOrDefault();
         }

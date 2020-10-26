@@ -15,12 +15,13 @@ namespace DragonflyAddon
         Dictionary<string, Func<ICommandController>> mapping = new Dictionary<string, Func<ICommandController>>();
         public PythonProvider(IPaths pathManager)
         {
-            Check<CheckPythonInstallation>();
-            Check<CheckPythonInPath>();
+            Check<CheckPythonInstallation3_8x32>();
+            Check<CheckPythonInPath3_8>();
 
             PythonEngine.Initialize();
 
-            var path=pathManager.GetPath("Dragonfly");
+            //var path = PythonEngine.PythonPath;
+            var path =pathManager.GetPath("Dragonfly");
             foreach (var file in Directory.EnumerateFiles(path))
             {
                 var name = Path.GetFileNameWithoutExtension(file);
