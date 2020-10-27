@@ -9,14 +9,16 @@ using VoiceControl;
 
 namespace DragonflyAddon
 {
-    
+   
+
     public class PythonProvider : IProvider<ICommandController>
     {
         Dictionary<string, Func<ICommandController>> mapping = new Dictionary<string, Func<ICommandController>>();
         public PythonProvider(IPaths pathManager)
         {
-            Check<CheckPythonInstallation3_8x32>();
-            Check<CheckPythonInPath3_8>();
+            return;
+            //Check<CheckPythonInstallation3_8x32>();
+            //Check<CheckPythonInPath3_8>();
 
             PythonEngine.Initialize();
 

@@ -11,6 +11,7 @@ namespace DragonflyAddon
     {
         public CheckPythonInPath2_7() : base("2.7")
         {
+
         }
     }
     public class CheckPythonInPath3_8 : CheckPythonInPath

@@ -15,6 +15,7 @@ namespace DragonflyAddon
         }
         public bool Check()
         {
+            if (PathFinder.GetPythonPathfromPath() == null) return false;
             var result = Config("-i");
             var match = Regex.Match(result, "(Natlink|NatLink) is enabled");
             return match.Success;

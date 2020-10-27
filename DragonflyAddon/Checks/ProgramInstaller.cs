@@ -32,23 +32,24 @@ namespace DragonflyAddon
         {
             try
             {
+                Admin.ElevateIfNecessary();
                 Process process = new Process();
                 process.StartInfo.FileName = "msiexec";
                 process.StartInfo.WorkingDirectory = Path.GetDirectoryName(path);
                 process.StartInfo.Arguments = $" /i {Path.GetFileName(path)} ADDLOCAL=ALL";
                 process.StartInfo.Verb = "runas";
-                process.StartInfo.RedirectStandardOutput = true;
+                //process.StartInfo.RedirectStandardOutput = true;
                 process.Start();
                 process.WaitForExit();
-                var result = process.StandardOutput.ReadToEnd();
-                return result;
+                //var result = process.StandardOutput.ReadToEnd();
+                return "";
+                //return result;
+
             }
             catch (Exception e)
             {
                 return e.Message;
             }
-
-
         }
 
         public static string RunElevatedProcess(string process, string arguments = "")
