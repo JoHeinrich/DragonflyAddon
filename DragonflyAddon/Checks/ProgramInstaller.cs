@@ -78,7 +78,7 @@ namespace DragonflyAddon
         {
             try
             {
-                var p = Process.Start(new ProcessStartInfo(process, arguments) { UseShellExecute = false, RedirectStandardOutput = true });
+                var p = Process.Start(new ProcessStartInfo(process, arguments) { UseShellExecute = false, RedirectStandardOutput = true, CreateNoWindow = true });
                 
                 p.WaitForExit();
                 if (p.ExitCode != 0) return p.ExitCode.ToString();
@@ -93,58 +93,29 @@ namespace DragonflyAddon
 
         }
 
-        public static string ExecutePythonCommand(string pythonPath,string file, params string[] commands)
+      
+        public static string ExecutePythonCommand(string pythonPath, string command)
         {
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = pythonPath;
-            start.Arguments = file;
             start.UseShellExecute = false;
+            start.CreateNoWindow = true;
             start.RedirectStandardOutput = true;
             start.RedirectStandardInput = true;
 
             using (Process process = Process.Start(start))
             {
-
                 using (StreamWriter writer = process.StandardInput)
                 {
-                    foreach (var command in commands)
-                    {
-                        writer.Write(command);
-                    }
+                    writer.Write(command);
                 }
-                
-
                 using (StreamReader reader = process.StandardOutput)
                 {
-                    string read = "";
-                    while (read != null)
-                        read = reader.ReadLine();
                     string result = reader.ReadToEnd();
                     return result;
                 }
             }
         }
-        public static string ExecutePythonCommand(string pythonPath, string command)
-            {
-                ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = pythonPath;
-                start.UseShellExecute = false;
-                start.RedirectStandardOutput = true;
-                start.RedirectStandardInput = true;
-
-                using (Process process = Process.Start(start))
-                {
-                    using (StreamWriter writer = process.StandardInput)
-                    {
-                        writer.Write(command);
-                    }
-                    using (StreamReader reader = process.StandardOutput)
-                    {
-                        string result = reader.ReadToEnd();
-                        return result;
-                    }
-                }
-            }
         
     }
 }

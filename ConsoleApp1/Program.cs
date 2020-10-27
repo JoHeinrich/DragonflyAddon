@@ -26,7 +26,8 @@ namespace ConsoleApp1
             DragonflyOrder order = new DragonflyOrder();
             foreach (var check in order.Order)
             {
-                if(!check.Check())
+                Console.WriteLine(check.GetType().Name);
+                if (!check.Check())
                 {
                     Console.WriteLine(check.Solve());
                 }
@@ -34,11 +35,13 @@ namespace ConsoleApp1
                 {
                     Console.WriteLine(check.Error);
                     Console.WriteLine(check.AvailableAction);
-                    break;
+                    Console.WriteLine("Failed");
+                    Console.Read();
+                    return;
                 }
             }
+            Console.WriteLine("Completed");
             Console.Read();
-
         }
     }
 }
