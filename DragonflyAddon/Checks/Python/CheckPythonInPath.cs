@@ -23,7 +23,7 @@ namespace DragonflyAddon
     public class CheckPythonInPath : ICheckSolve
     {
         string version;
-        public string Error => "Python not in path";
+        public string Error { get; set; } = "Python not in path";
         public string AvailableAction => "Adding Python to Path";
 
         public CheckPythonInPath(string version)
@@ -36,8 +36,11 @@ namespace DragonflyAddon
             try
             {
                 var path = PathFinder.GetPythonPathfromPath();
+                Error = "Python not in path";
                 if (path == null) return false;
+                Error = "Python is in path";
                 if (path.IsVersion(version)) return true;
+                Error = $"Python in path is wrong version {path.Version}";
                 return false;
             }
             catch (Exception)

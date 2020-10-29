@@ -10,9 +10,10 @@ namespace DragonflyAddon
     {
         SupportedPythonVerions Version;
 
-        public DragonflyOrder()
+        public DragonflyOrder(IPaths paths)
         {
             Version = SupportedPythonVerions.v2_7;
+            this.paths = paths;
         }
 
         public IEnumerable<ICheckSolve> Order
@@ -30,14 +31,15 @@ namespace DragonflyAddon
                 }
             }
         }
-        public IEnumerable<ICheckSolve> Order2_7 = new List<ICheckSolve>
+        public IEnumerable<ICheckSolve> Order2_7 => new List<ICheckSolve>
         {
             new CheckPythonInstallation2_7x32(),
             new CheckPythonInPath2_7(),
             new CheckPipPackage2_7(),
             new CheckNatlinkInstallationFor2_7(),
-            new CheckNatlinkConfiguration2_7(),
+            new CheckNatlinkConfiguration2_7(paths),
         };
+        private readonly IPaths paths;
 
         public IEnumerable<ICheckSolve> Order3_8 => new List<ICheckSolve>
         {
@@ -45,7 +47,7 @@ namespace DragonflyAddon
             new CheckPythonInPath3_8(),
             new CheckPipPackage3_8(),
             new CheckNatlinkInstallationFor3_8(),
-            new CheckNatlinkConfiguration3_8(),
+            new CheckNatlinkConfiguration3_8(paths),
         };
     }
 

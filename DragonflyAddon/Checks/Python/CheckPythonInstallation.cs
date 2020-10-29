@@ -91,12 +91,11 @@ namespace DragonflyAddon
         {
 
             var installations = PathFinder.GetPythonInstallations();
+            Error  = "Python not installed";
             if (installations.Count() == 0) return false;
             Error = VersionError(installations);
             if (!string.IsNullOrEmpty(Error)) return false;
-
-
-
+            Error = "Python is installed";
             return true;
         }
 

@@ -9,13 +9,17 @@ namespace DragonflyAddon
     public class CheckNatlinkInstallationFor3_8 : ICheckSolve
     {
         string url = "https://github.com/dictation-toolbox/natlink.git";
-        public string Error =>"Natlink not installed";
+        public string Error { get; set; } = "Natlink not installed";
         public string AvailableAction =>$"Will clone Natlink from {url}";
 
 
         public bool Check()
         {
-            return File.Exists(@"C:\DT\natlink\ConfigureNatlink\natlinkconfigfunctions.py");
+            bool exists = File.Exists(@"C:\DT\natlink\ConfigureNatlink\natlinkconfigfunctions.py");
+            if (exists) Error = "Natlink not installed";
+            if (!exists) Error = "Natlink is installed";
+            return exists;
+
         }
 
 
