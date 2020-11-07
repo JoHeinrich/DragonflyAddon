@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using VoiceControl;
 
@@ -16,19 +17,18 @@ namespace DragonflyAddon
         Dictionary<string, Func<ICommandController>> mapping = new Dictionary<string, Func<ICommandController>>();
         public PythonProvider(IPaths pathManager)
         {
-            return;
-            //Check<CheckPythonInstallation3_8x32>();
-            //Check<CheckPythonInPath3_8>();
 
             PythonEngine.Initialize();
 
-            //var path = PythonEngine.PythonPath;
-            var path =pathManager.GetPath("Dragonfly");
-            foreach (var file in Directory.EnumerateFiles(path))
+            var path =pathManager.GetPath("Dragonfly/Rules");
+            var files = Directory.EnumerateFiles(path,"*.py");
+            files = files.Where(x => !Path.GetFileNameWithoutExtension(x).StartsWith("_"));
+            foreach (var file in files)
             {
                 var name = Path.GetFileNameWithoutExtension(file);
                 Console.WriteLine("Python File: "+name);
-                mapping.Add(name, () => new DragonflyController(file));
+                string prefix = Assembly.GetExecutingAssembly().GetName().Name + ".Rule.";
+                mapping[prefix+name] = () => new DragonflyController(file);
             }
         }
         public IEnumerable<string> Available => mapping.Keys.ToList();
@@ -59,10 +59,18 @@ namespace DragonflyAddon
 
         public void Build(ICommandBuilder builder)
         {
-            foreach (var command in analyzer.Commands)
+            if (analyzer.Error != null)
             {
-                builder.AddCommand(command, () => analyzer.Execute(command));
+                builder.AddCommand(analyzer.Error, () => { });
             }
+            else
+            {
+                foreach (var command in analyzer.Commands)
+                {
+                    builder.AddCommand(command, () => analyzer.Execute(command));
+                }
+            }
+
         }
     }
 }

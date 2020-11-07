@@ -7,10 +7,19 @@ namespace DragonflyAddon
 {
     public class DragonflyAnalyzer
     {
+        public string Error;
         Dictionary<string, PyObject> commands = new Dictionary<string, PyObject>();
         public DragonflyAnalyzer(string path)
         {
-            Analyze(path);
+            try
+            {
+                Analyze(path);
+            }
+            catch (System.Exception e)
+            {
+                Error = e.Message;
+            }
+
         }
 
         public IEnumerable<string> Commands => commands.Keys.Select(x => x.ToString());

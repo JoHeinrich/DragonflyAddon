@@ -12,7 +12,7 @@ namespace DragonflyAddon
 
         public DragonflyOrder(IPaths paths)
         {
-            Version = SupportedPythonVerions.v2_7;
+            Version = SupportedPythonVerions.v3_8;
             this.paths = paths;
         }
 
