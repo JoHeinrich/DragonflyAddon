@@ -10,8 +10,9 @@ namespace DragonflyAddon
         private readonly IRules rules;
         private readonly ILog log;
         private readonly IProfileConfiguration profileConfiguration;
-        public string ControllerDirectory = @"C:\Users\laise\Documents\EasyVoiceCodeTest2\Dragonfly\Controllers\";
-        public string GrammarDirectory = @"C:\Users\laise\Documents\EasyVoiceCodeTest2\Dragonfly\";
+        private readonly IPaths paths;
+        public string ControllerDirectory;
+        public string GrammarDirectory;
 
         bool listening;
 
@@ -29,11 +30,15 @@ namespace DragonflyAddon
             }
         }
 
-        public DragonflySpeechBackend(IRules rules, ILog log,IProfileConfiguration profileConfiguration)
+        public DragonflySpeechBackend(IRules rules, ILog log,IProfileConfiguration profileConfiguration,IPaths paths)
         {
             this.rules = rules;
             this.log = log;
             this.profileConfiguration = profileConfiguration;
+            this.paths = paths;
+            
+            GrammarDirectory = paths.GetPath("Dragonfly");
+            ControllerDirectory = Path.Combine(GrammarDirectory,"Controllers");
         }
 
         DragonflyPythonListener activeListener;
@@ -47,7 +52,7 @@ namespace DragonflyAddon
             string text = ruleToPython.BuildGrammar(new Identifier( grammar.Identifier),profileConfiguration.GetActivationConditions(grammar.Identifier));
             PrepareDirectory();
             WriteRuleFiles(ruleToPython.pythonRules);
-            var grammarPath = GrammarDirectory + $"_{new Identifier(grammar.Identifier).Escaped}.py";
+            var grammarPath = Path.Combine(GrammarDirectory, $"_{new Identifier(grammar.Identifier).Escaped}.py");
             File.WriteAllText(grammarPath, text);
             DragonflyPythonListener listener = new DragonflyPythonListener(grammarPath, log);
             if(listeners.ContainsKey(grammar.Identifier))
@@ -80,17 +85,18 @@ namespace DragonflyAddon
         void PrepareDirectory()
         {
             Directory.CreateDirectory(ControllerDirectory);
-            File.Create(ControllerDirectory + "__init__.py").Close();
+            var RuleDirectory = paths.GetPath("Dragonfly/Rules");
+            File.Create(Path.Combine(ControllerDirectory, "__init__.py")).Close();
+            File.Create(Path.Combine(RuleDirectory, "__init__.py")).Close();
         }
-        
+
         void WriteRuleFiles(PythonRules pythonRules)
         {
             foreach (var rule in pythonRules.Buffered)
             {
-                File.WriteAllText(ControllerDirectory + new Identifier(rule).Escaped + ".py", pythonRules[rule]);
+                File.WriteAllText(Path.Combine(ControllerDirectory,new Identifier(rule).Escaped + ".py"), pythonRules[rule]);
             }
         }
-
 
         public bool Simulate(string input)
         {

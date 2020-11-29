@@ -109,12 +109,12 @@ namespace DragonflyAddon
                 {
                     // TODO: verwalteten Zustand (verwaltete Objekte) entsorgen.
                 }
-                
-                if (!process.HasExited)
+                if (process != null && !process.HasExited)
                 {
                     error.Close();
                     output.Close();
                     process.Kill();
+                    process = null;
                 }
                 // TODO: nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer weiter unten überschreiben.
                 // TODO: große Felder auf Null setzen.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using VoiceControl;
 
 namespace DragonflyAddon
 {
@@ -38,7 +39,7 @@ namespace DragonflyAddon
             {
                 scope.Import("sys");
                 scope.Import("os");
-                var dir = @"C:/Users/laise/Documents/EasyVoiceCodeTest2/Dragonfly/Rules";
+                var dir = Path.GetDirectoryName(path);
                 var com = $"sys.path.append({dir})";
                 scope.Exec("p = os.getcwd()");
                 var p = scope.Get("p");
