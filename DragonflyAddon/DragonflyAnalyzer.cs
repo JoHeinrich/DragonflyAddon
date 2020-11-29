@@ -38,7 +38,7 @@ namespace DragonflyAddon
             {
                 scope.Import("sys");
                 scope.Import("os");
-                var dir = @"C:/Users/laise/Documents/EasyVoiceCodeTest2/Dragonfly";
+                var dir = @"C:/Users/laise/Documents/EasyVoiceCodeTest2/Dragonfly/Rules";
                 var com = $"sys.path.append({dir})";
                 scope.Exec("p = os.getcwd()");
                 var p = scope.Get("p");

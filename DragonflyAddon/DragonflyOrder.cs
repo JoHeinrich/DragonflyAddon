@@ -8,11 +8,12 @@ namespace DragonflyAddon
     public enum SupportedPythonVerions { v2_7, v3_8 }
     public class DragonflyOrder : ICheckSolveOrder
     {
-        SupportedPythonVerions Version;
+        ISetting<SupportedPythonVerions> Version;
 
-        public DragonflyOrder(IPaths paths)
+        public DragonflyOrder(IPaths paths,ISettings settings)
         {
-            Version = SupportedPythonVerions.v3_8;
+            Version = settings.Create("Version", SupportedPythonVerions.v2_7);
+
             this.paths = paths;
         }
 
@@ -20,7 +21,7 @@ namespace DragonflyAddon
         {
             get
             {
-                switch (Version)
+                switch (Version.Value)
                 {
                     case SupportedPythonVerions.v2_7:
                         return Order2_7;

@@ -33,7 +33,7 @@ namespace DragonflyAddon
         }
         public IEnumerable<string> Available => mapping.Keys.ToList();
 
-        public ICommandController Instantiate(string identifier)
+        public ICommandController Get(string identifier)
         {
             return mapping[identifier]();
         }

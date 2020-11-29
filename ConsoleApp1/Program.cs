@@ -46,33 +46,33 @@ namespace ConsoleApp1
             analyzer.Execute("test");
         }
 
-        private void CheckSolveAll()
-        {
-            Console.WriteLine(Admin.IsAdmin);
-            if (!Admin.IsAdmin)
-            {
-                Admin.RestartAsAdmin();
-            }
-            Environment.GetCommandLineArgs();
-            DragonflyOrder order = new DragonflyOrder(new Path());
-            foreach (var check in order.Order)
-            {
-                Console.WriteLine(check.GetType().Name);
-                if (!check.Check())
-                {
-                    Console.WriteLine(check.Solve());
-                }
-                if (!check.Check())
-                {
-                    Console.WriteLine(check.Error);
-                    Console.WriteLine(check.AvailableAction);
-                    Console.WriteLine("Failed");
-                    Console.Read();
-                    return;
-                }
-            }
-            Console.WriteLine("Completed");
-            Console.Read();
-        }
+        //private void CheckSolveAll()
+        //{
+        //    Console.WriteLine(Admin.IsAdmin);
+        //    if (!Admin.IsAdmin)
+        //    {
+        //        Admin.RestartAsAdmin();
+        //    }
+        //    Environment.GetCommandLineArgs();
+        //    DragonflyOrder order = new DragonflyOrder(new Path());
+        //    foreach (var check in order.Order)
+        //    {
+        //        Console.WriteLine(check.GetType().Name);
+        //        if (!check.Check())
+        //        {
+        //            Console.WriteLine(check.Solve());
+        //        }
+        //        if (!check.Check())
+        //        {
+        //            Console.WriteLine(check.Error);
+        //            Console.WriteLine(check.AvailableAction);
+        //            Console.WriteLine("Failed");
+        //            Console.Read();
+        //            return;
+        //        }
+        //    }
+        //    Console.WriteLine("Completed");
+        //    Console.Read();
+        //}
     }
 }
