@@ -7,7 +7,7 @@ namespace DragonflyAddonTests
 {
 
 
-    [Ignore]
+    
     [TestClass]
     public class ConnectAndExecutePython
     {
@@ -15,8 +15,8 @@ namespace DragonflyAddonTests
 
         public ConnectAndExecutePython()
         {
-            CheckSolve.Execute<CheckPythonInstallation3_8x32>();
-            CheckSolve.Execute<CheckPythonInPath3_8>();
+            //CheckSolve.Execute<CheckPythonInstallation3_8x32>();
+            //CheckSolve.Execute<CheckPythonInPath3_8>();
 
             //PythonEngine.PythonPath += @"C:\Users\laise\Documents\EasyVoiceCodeTest2\Dragonfly";
             //PythonEngine.PythonHome = @"C:\Users\laise\Documents\EasyVoiceCodeTest2\Dragonfly";
@@ -72,11 +72,11 @@ namespace DragonflyAddonTests
         }
 
 
-        [TestMethod]
-        public void Configuration()
-        {
-            Assert.AreEqual("", CheckSolve.Execute<CheckNatlinkConfiguration2_7>());
-        }
+        //[TestMethod]
+        //public void Configuration()
+        //{
+        //    Assert.AreEqual("", CheckSolve.Execute<CheckNatlinkConfiguration2_7>());
+        //}
     }
 
 
@@ -108,11 +108,11 @@ namespace DragonflyAddonTests
         }
 
 
-        [TestMethod]
-        public void Configuration()
-        {
-            Assert.AreEqual("", CheckSolve.Execute<CheckNatlinkConfiguration3_8>());
-        }
+        //[TestMethod]
+        //public void Configuration()
+        //{
+        //    Assert.AreEqual("", CheckSolve.Execute<CheckNatlinkConfiguration3_8>());
+        //}
     }
 }
 

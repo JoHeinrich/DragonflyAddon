@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using VoiceControl;
 
 namespace DragonflyAddon
 {
     public class DragonflyAnalyzer
     {
+        public string Error;
         Dictionary<string, PyObject> commands = new Dictionary<string, PyObject>();
         public DragonflyAnalyzer(string path)
         {
-            Analyze(path);
+            try
+            {
+                Analyze(path);
+            }
+            catch (System.Exception e)
+            {
+                Error = e.Message;
+            }
+
         }
 
         public IEnumerable<string> Commands => commands.Keys.Select(x => x.ToString());
@@ -29,7 +39,7 @@ namespace DragonflyAddon
             {
                 scope.Import("sys");
                 scope.Import("os");
-                var dir = @"C:/Users/laise/Documents/EasyVoiceCodeTest2/Dragonfly";
+                var dir = Path.GetDirectoryName(path);
                 var com = $"sys.path.append({dir})";
                 scope.Exec("p = os.getcwd()");
                 var p = scope.Get("p");
